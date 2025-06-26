@@ -1,0 +1,28 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath,amssymb,amsthm,enumitem,setspace}
+\usepackage[top=15mm]{geometry}
+
+\newcommand{\twovec}[2]{\ensuremath{\begin{pmatrix}{#1}\\{#2}\end{pmatrix}}}
+
+\author{Ludo Pulles}
+\date{1 July, 2025}
+\title{Exercise Sheet --- Math}
+
+\begin{document}
+\maketitle
+\onehalfspacing%
+
+\section{Vectors and inner products}
+
+\subsection{Dimension 2}
+We describe points in 2d-space by their \(x\)- and \(y\)-coordinate.
+We write \(\displaystyle\twovec{x}{y}\) for a point with \(x\)-coordinate \(x\) and \(y\)-coordinate \(y\).
+If we have two points, \(\displaystyle\vec{v} = \twovec{a}{b}\) and \(\displaystyle\vec{w} = \twovec{c}{d}\) the ``dot product'' of \(\vec{v}\) and \(\vec{w}\) is: \(\vec{v} \cdot \vec{w} = ac + bd\).
+In the following exercises, we see why this definition is nice and meaningful.
+
+\begin{enumerate}[label=(i)]
+\item A very special case of the dot product is when the first vector is \(\displaystyle \vec{v} = \twovec{1}{0}\).
+	Simplify the ``dot product'': \(\twovec{1}{0} \cdot \twovec{c}{d}\) in this case.
+\end{enumerate}
+
+\end{document}
