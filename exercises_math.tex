@@ -1,28 +1,81 @@
-\documentclass[12pt,a4paper]{article}
-\usepackage{amsmath,amssymb,amsthm,enumitem,setspace}
-\usepackage[top=15mm]{geometry}
-
+\documentclass[10pt,a4paper]{article}
+\usepackage{amsmath,enumitem,fancyhdr,mathtools,graphicx}
+\usepackage[margin=2cm]{geometry}
 \newcommand{\twovec}[2]{\ensuremath{\begin{pmatrix}{#1}\\{#2}\end{pmatrix}}}
+\newcommand{\V}[1]{\vec{\mathbf{#1}}}
 
-\author{Ludo Pulles}
-\date{1 July, 2025}
-\title{Exercise Sheet --- Math}
+\DeclarePairedDelimiter{\norm}{\big\lVert}{\big\rVert}
+
+\pagestyle{fancy}
+\fancyhead[L]{Visit Gym Neufeld}
+\fancyhead[C]{Exercise Sheet (Math)}
+\fancyhead[R]{1 July, 2025}
 
 \begin{document}
-\maketitle
-\onehalfspacing%
+\section{Inner products}
+We describe points in 2D-space by their \(x\)- and \(y\)-coordinate.
+For example: \(\twovec{a}{b}\) is the point with \(x\)-coordinate \(a\) and \(y\)-coordinate \(b\).
+If we have two points \(\V{v} = \twovec{a}{b}\) and \(\V{w} = \twovec{c}{d}\),
+	the ``inner product'' of \(\V{v}\) and \(\V{w}\) is:
+\[\V{v} \cdot \V{w} = a \times c \;+\; b \times d.\]
 
-\section{Vectors and inner products}
+In the exercises below, we will see why this definition is nice and meaningful.
 
-\subsection{Dimension 2}
-We describe points in 2d-space by their \(x\)- and \(y\)-coordinate.
-We write \(\displaystyle\twovec{x}{y}\) for a point with \(x\)-coordinate \(x\) and \(y\)-coordinate \(y\).
-If we have two points, \(\displaystyle\vec{v} = \twovec{a}{b}\) and \(\displaystyle\vec{w} = \twovec{c}{d}\) the ``dot product'' of \(\vec{v}\) and \(\vec{w}\) is: \(\vec{v} \cdot \vec{w} = ac + bd\).
-In the following exercises, we see why this definition is nice and meaningful.
+\begin{enumerate}[label=(\arabic*)]
+\item Simplify the inner product in the special case when the first vector is \( \V{v} = \twovec{1}{0}\).
+	Then: \(\twovec{1}{0} \cdot \twovec{c}{d} = \ldots\)
+	\begin{figure}[h!]
+		\centering\fbox{\includegraphics[width=.5\textwidth]{tikz/x-axis.pdf}}
+	\end{figure}
 
-\begin{enumerate}[label=(i)]
-\item A very special case of the dot product is when the first vector is \(\displaystyle \vec{v} = \twovec{1}{0}\).
-	Simplify the ``dot product'': \(\twovec{1}{0} \cdot \twovec{c}{d}\) in this case.
+\item How does this relate to \(\V{w}\)? If \(\V{v} \cdot \V{w} = 0\), what is the angle between \(\V{v}\) and \(\V{w}\)?
+
+\item Now look at the inner product with \( \V{v} = \twovec{a}{0}\).
+	In this case, \(\V{v} \cdot \V{v} = a^2\).
+
+\item We can rotate a point \(\V{v} = \twovec{a}{b}\) counter-clockwise by an angle of \(\theta\)
+	as follows: \(\V{v}\,' = \twovec{a \cos(\theta) - b \sin(\theta)}{a \sin(\theta) + b \cos(\theta)}\).\\[-1em]
+	\begin{itemize}
+	\item Verify the equation for \(\theta = 90^\circ\).
+		Then: \(\V{v}\,' = \twovec{\quad\ldots\quad}{\quad\ldots\quad}\).
+
+	\item Write \(\V{w}\,'\) for the rotation of \(\V{w}\) by an angle of \(\theta\).
+		Show: \(\V{v} \cdot \V{w} = \V{v}\,' \cdot \V{w}\,'\).%
+		\footnote{Hint: recall \(\cos^2(\theta) + \sin^2(\theta) = 1\).}
+	\end{itemize}
+
+	\begin{figure}[h!]
+		\centering\fbox{\includegraphics[width=.5\textwidth]{tikz/givens.pdf}}
+	\end{figure}
+\item Describe the angle \(\theta\) (using \(a, b\) and \(\sin/\cos/\tan\)) that rotates \(\V{v} = \twovec{a}{b}\) to \(\V{v}\,' = \twovec{x}{0}\) for some \(x > 0\).
+	What is \(x\)?
+
+\item The length of a vector \(\V{v} = \twovec{a}{b}\) is given by \(\norm{\V{v}} = \sqrt{a^2 + b^2}\).
+	Prove: \(\norm{\V{v}}^2 = \V{v} \cdot \V{v}\).
+
+\item Suppose \(\V{v}\) and \(\V{w}\) have an angle \(\theta\) between them.
+	Prove (using the previous exercises):\footnote{Hint: use (5) to rotate \(\V{v}\) first, and rotate \(\V{w}\) similarly.}
+	\[\V{v} \cdot \V{w} = \cos(\theta) \times \norm{\V{v}} \times \norm{\V{w}}.\]
 \end{enumerate}
+
+\clearpage
+\section{Parallelograms}
+% \det(v . w) is invariant.
+Recall that a basis gives a tiling.
+We will relate the area to the basis.
+First assume \(\V{v}\) is on the \(x\)-axis.
+
+\begin{figure}[h!]
+	\centering\fbox{\includegraphics[width=.5\textwidth]{tikz/parallelogram.pdf}}
+\end{figure}
+
+\begin{enumerate}[label=(\arabic*)]
+\item Show that the parallelogram \(O, \V{v}, \V{v}+\V{w}, \V{w}\), and the rectangle \(O, A, \V{w}, C\) have equal area.\footnote{Hint: go from one to the other by adding a triangle and removing a triangle (of same area).}
+\item What is the area?
+\end{enumerate}
+
+\section{Gram--Schmidt and projections}
+
+\section{Lagrange reduction}
 
 \end{document}
