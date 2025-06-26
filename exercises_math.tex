@@ -30,13 +30,14 @@ In the exercises below, we will see why this definition is nice and meaningful.
 \item Simplify the inner product in the special case when the first vector is \( \vec{v} = \twovec{1}{0}\).
 	Then: \(\twovec{1}{0} \cdot \twovec{c}{d} = \ldots\)
 	\begin{figure}[h!]
-		\centering\fbox{\includegraphics[width=.5\textwidth]{tikz/x-axis.pdf}}
+		\centering\fbox{\includegraphics[width=.4\textwidth]{tikz/x-axis.pdf}}
 	\end{figure}
 
 \item How does this relate to \(\vec{w}\)? If \(\vec{v} \cdot \vec{w} = 0\), what is the angle between \(\vec{v}\) and \(\vec{w}\)?
 
-\item Now look at the inner product with \( \vec{v} = \twovec{a}{0}\).
-	In this case, \(\vec{v} \cdot \vec{v} = a^2\).
+\item\label{item:proj} Now look at the inner product with \( \vec{v} = \twovec{a}{0}\).
+	Compute: \(\displaystyle\frac{\vec{v} \cdot \vec{w}}{\vec{v} \cdot \vec{v}} \times \vec{v} = \twovec{\quad\ldots\quad}{0}\).\footnote{Note: this fraction is a number. If \(z\) is some number, then \(z \times \twovec{a}{b} = \twovec{za}{zb}\).}
+	% In this case, \(\vec{v} \cdot \vec{v} = a^2\).
 
 \item We can rotate a point \(\vec{v} = \twovec{a}{b}\) counter-clockwise by an angle of \(\theta\)
 	as follows: \(\vec{v}\,' = \twovec{a \cos(\theta) - b \sin(\theta)}{a \sin(\theta) + b \cos(\theta)}\).\\[-1em]
@@ -50,7 +51,7 @@ In the exercises below, we will see why this definition is nice and meaningful.
 	\end{enumerate}
 
 	\begin{figure}[h!]
-		\centering\fbox{\includegraphics[width=.5\textwidth]{tikz/givens.pdf}}
+		\centering\fbox{\includegraphics[width=.4\textwidth]{tikz/givens.pdf}}
 	\end{figure}
 \item Describe the angle \(\theta\) (using \(a, b\) and \(\sin/\cos/\tan\)) that rotates \(\vec{v} = \twovec{a}{b}\) to \(\vec{v}\,' = \twovec{x}{0}\) for some \(x > 0\).
 	What is \(x\)?
@@ -78,14 +79,16 @@ First, we relate the area of the parallelogram to the basis.
 \begin{enumerate}
 	\item\label{item1} Show: the parallelogram \(O, \vec{v}, \vec{v}+\vec{w}, \vec{w}\), and the rectangle \(O, A, \vec{w}, C\) have equal
 		area.\footnote{Hint: go from one to the other by adding a triangle and removing a triangle (of same area).}
-	\item\label{item2} Show: the area is independent of \(c\),~i.e.~replacing \(\vec{w}\) by \(\vec{w} + z \vec{v}\) does not change the area for any \(z\)!
+	\item\label{item2} Show:
+		replacing \(\vec{w}\) by \(\vec{w} + z \vec{v}\) does not change the area for any \(z\)
+		(the area is independent of \(c\)).
 	\item\label{item3} What is the area in terms of \(x\) and \(d\)?
 \end{enumerate}
 
 \noindent
 Now consider the general case of \(\vec{v} = \twovec{a}{b}\) and \(\vec{w} = \twovec{c}{d}\).
 \begin{figure}[h!]
-	\centering\fbox{\includegraphics[width=.6\textwidth]{tikz/tiling.pdf}}
+	\centering\includegraphics[width=.6\textwidth]{tikz/tiling.pdf}
 	\caption{Tiling of 2D-space by the lattice basis \([\vec{v}, \vec{w}]\)}\label{fig:tiling}
 \end{figure}
 
@@ -106,7 +109,7 @@ Now consider the general case of \(\vec{v} = \twovec{a}{b}\) and \(\vec{w} = \tw
 		Show: the circle in Figure~\ref{fig:tiling} has radius \(r' = \frac12 \norm{\vec{v}} \times \sin(\theta) \leq r\), where \(\theta\) is the angle between \(\vec{v}\) and \(\vec{w}\). \\
 \end{enumerate}
 \begin{figure}[h!]
-	\centering\fbox{\includegraphics[width=.6\textwidth]{tikz/tiling-NP.pdf}}
+	\centering\includegraphics[width=.6\textwidth]{tikz/tiling-NP.pdf}
 	\caption{A different tiling of 2D-space, using a rectangular tile.}\label{fig:tiling-np}
 \end{figure}
 \noindent
@@ -134,6 +137,29 @@ Now, vectors are described by \(n\) coordinates:
 \]
 We still have the inner product, which is:
 \(\vec{v} \cdot \vec{w} = v_1 \times w_1 + v_2 \times w_2 + \ldots v_n \times w_n\).
+
+\begin{enumerate}
+\item
+	Prove the following, where \(\vec{v},\vec{a},\vec{b}\) are vectors and \(z\) is any number:
+	\[
+		\vec{v} \cdot (\vec{a} + \vec{b}) = (\vec{v} \cdot \vec{a}) + (\vec{v} \cdot \vec{b}),
+		\qquad
+		\vec{v} \cdot (z \times \vec{w}) = z \times (\vec{v} \cdot \vec{w}).
+	\]
+
+	\item
+		There is no simple ``division'' operation with vectors, because you cannot express \(\vec{w}\) in terms of \(\vec{v}\) whenever it is not pointing in the same direction.
+	Still, using~\ref{item:proj} from sheet 1,
+	we can make a vector \(\vec{w}\) \emph{orthogonal} to \(\vec{v}\) by computing the following:
+	\[
+		\pi_{\vec{v}}(\vec{w}) = \vec{w} - \frac{\vec{v} \cdot \vec{w}}{\vec{v} \cdot \vec{v}} \times \vec{v}.
+	\]
+	Show: \(\pi_{\vec{v}}(\vec{w})\) satisfies \(\vec{v} \cdot \pi_{\vec{v}}(\vec{w}) = 0\).
+
+	\item
+		By rounding the fraction to the nearest integer, show you can reduce a lattice basis.
+		This is called size-reduction!
+\end{enumerate}
 
 \section{Lagrange reduction}
 
