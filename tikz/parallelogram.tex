@@ -5,20 +5,20 @@
 \newcommand{\V}[1]{\vec{\mathbf{#1}}}
 \usetikzlibrary{calc,patterns}
 \tikzset{mydraw/.style={black,->}}
-\tikzset{mynode/.style={scale=0.7}}
+\tikzset{mynode/.style={scale=0.6}}
 
 \begin{document}
 \begin{tikzpicture}
-	\clip (-1,-1) rectangle (4,2);
+	\clip (-.3,-0.7) rectangle (3,2);
 
-	\coordinate (v) at (2.5, 0);
+	\coordinate (v) at (1.9, 0);
 	\coordinate (wx) at (0.8, 0);
 	\coordinate (wy) at (0, 1.1);
 	\coordinate (w) at ($(wx) + (wy)$);
 	\coordinate (vw) at ($(v) + (w)$);
 	\coordinate (vwx) at ($(v) + (wx)$);
 
-	\draw[mydraw] (0,0) -- (4,0) node[mynode,below left] {\(x\)};
+	\draw[mydraw] (0,0) -- (3,0) node[mynode,below left] {\(x\)};
 	\draw[mydraw] (0,0) -- (0,2) node[mynode,below left] {\(y\)}; % axis lines
 
 	\fill[black!10!white] (0,0) -- (v) -- (vw) -- (w) -- (0,0);

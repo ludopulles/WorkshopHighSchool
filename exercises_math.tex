@@ -1,10 +1,16 @@
+% chktex-file 8
 \documentclass[10pt,a4paper]{article}
-\usepackage{amsmath,enumitem,fancyhdr,mathtools,graphicx}
+\usepackage{amsmath,amssymb,enumitem,fancyhdr,mathtools,graphicx,wrapfig}
 \usepackage[margin=2cm]{geometry}
 \newcommand{\twovec}[2]{\ensuremath{\begin{pmatrix}{#1}\\{#2}\end{pmatrix}}}
-\newcommand{\V}[1]{\vec{\mathbf{#1}}}
+
+\NewCommandCopy{\oldvec}{\vec} % https://tex.stackexchange.com/questions/47351/can-i-redefine-a-command-to-contain-itself
+\renewcommand{\vec}[1]{\oldvec{\mathbf{#1}}}
+\newcommand{\RR}{\mathbb{R}}
 
 \DeclarePairedDelimiter{\norm}{\big\lVert}{\big\rVert}
+\setlist[enumerate,1]{labelindent=\parindent,label=\textbf{(\alph*)}}
+\setlist[enumerate,2]{labelindent=\parindent,label=\textbf{(\arabic*)}}
 
 \pagestyle{fancy}
 \fancyhead[L]{Visit Gym Neufeld}
@@ -15,66 +21,119 @@
 \section{Inner products}
 We describe points in 2D-space by their \(x\)- and \(y\)-coordinate.
 For example: \(\twovec{a}{b}\) is the point with \(x\)-coordinate \(a\) and \(y\)-coordinate \(b\).
-If we have two points \(\V{v} = \twovec{a}{b}\) and \(\V{w} = \twovec{c}{d}\),
-	the ``inner product'' of \(\V{v}\) and \(\V{w}\) is:
-\[\V{v} \cdot \V{w} = a \times c \;+\; b \times d.\]
-
+If we have two points \(\vec{v} = \twovec{a}{b}\) and \(\vec{w} = \twovec{c}{d}\),
+	the ``inner product'' of \(\vec{v}\) and \(\vec{w}\) is:
+\[\vec{v} \cdot \vec{w} = a \times c \;+\; b \times d.\]
 In the exercises below, we will see why this definition is nice and meaningful.
 
-\begin{enumerate}[label=(\arabic*)]
-\item Simplify the inner product in the special case when the first vector is \( \V{v} = \twovec{1}{0}\).
+\begin{enumerate}
+\item Simplify the inner product in the special case when the first vector is \( \vec{v} = \twovec{1}{0}\).
 	Then: \(\twovec{1}{0} \cdot \twovec{c}{d} = \ldots\)
 	\begin{figure}[h!]
 		\centering\fbox{\includegraphics[width=.5\textwidth]{tikz/x-axis.pdf}}
 	\end{figure}
 
-\item How does this relate to \(\V{w}\)? If \(\V{v} \cdot \V{w} = 0\), what is the angle between \(\V{v}\) and \(\V{w}\)?
+\item How does this relate to \(\vec{w}\)? If \(\vec{v} \cdot \vec{w} = 0\), what is the angle between \(\vec{v}\) and \(\vec{w}\)?
 
-\item Now look at the inner product with \( \V{v} = \twovec{a}{0}\).
-	In this case, \(\V{v} \cdot \V{v} = a^2\).
+\item Now look at the inner product with \( \vec{v} = \twovec{a}{0}\).
+	In this case, \(\vec{v} \cdot \vec{v} = a^2\).
 
-\item We can rotate a point \(\V{v} = \twovec{a}{b}\) counter-clockwise by an angle of \(\theta\)
-	as follows: \(\V{v}\,' = \twovec{a \cos(\theta) - b \sin(\theta)}{a \sin(\theta) + b \cos(\theta)}\).\\[-1em]
-	\begin{itemize}
+\item We can rotate a point \(\vec{v} = \twovec{a}{b}\) counter-clockwise by an angle of \(\theta\)
+	as follows: \(\vec{v}\,' = \twovec{a \cos(\theta) - b \sin(\theta)}{a \sin(\theta) + b \cos(\theta)}\).\\[-1em]
+	\begin{enumerate}
 	\item Verify the equation for \(\theta = 90^\circ\).
-		Then: \(\V{v}\,' = \twovec{\quad\ldots\quad}{\quad\ldots\quad}\).
+		Then: \(\vec{v}\,' = \twovec{\quad\ldots\quad}{\quad\ldots\quad}\).
 
-	\item Write \(\V{w}\,'\) for the rotation of \(\V{w}\) by an angle of \(\theta\).
-		Show: \(\V{v} \cdot \V{w} = \V{v}\,' \cdot \V{w}\,'\).%
+	\item Write \(\vec{w}\,'\) for the rotation of \(\vec{w}\) by an angle of \(\theta\).
+		Show: \(\vec{v} \cdot \vec{w} = \vec{v}\,' \cdot \vec{w}\,'\).%
 		\footnote{Hint: recall \(\cos^2(\theta) + \sin^2(\theta) = 1\).}
-	\end{itemize}
+	\end{enumerate}
 
 	\begin{figure}[h!]
 		\centering\fbox{\includegraphics[width=.5\textwidth]{tikz/givens.pdf}}
 	\end{figure}
-\item Describe the angle \(\theta\) (using \(a, b\) and \(\sin/\cos/\tan\)) that rotates \(\V{v} = \twovec{a}{b}\) to \(\V{v}\,' = \twovec{x}{0}\) for some \(x > 0\).
+\item Describe the angle \(\theta\) (using \(a, b\) and \(\sin/\cos/\tan\)) that rotates \(\vec{v} = \twovec{a}{b}\) to \(\vec{v}\,' = \twovec{x}{0}\) for some \(x > 0\).
 	What is \(x\)?
 
-\item The length of a vector \(\V{v} = \twovec{a}{b}\) is given by \(\norm{\V{v}} = \sqrt{a^2 + b^2}\).
-	Prove: \(\norm{\V{v}}^2 = \V{v} \cdot \V{v}\).
+\item The length of a vector \(\vec{v} = \twovec{a}{b}\) is given by \(\norm{\vec{v}} = \sqrt{a^2 + b^2}\).
+	Prove: \(\norm{\vec{v}}^2 = \vec{v} \cdot \vec{v}\).
 
-\item Suppose \(\V{v}\) and \(\V{w}\) have an angle \(\theta\) between them.
-	Prove (using the previous exercises):\footnote{Hint: use (5) to rotate \(\V{v}\) first, and rotate \(\V{w}\) similarly.}
-	\[\V{v} \cdot \V{w} = \cos(\theta) \times \norm{\V{v}} \times \norm{\V{w}}.\]
+\item Suppose the angle between \(\vec{v}\) and \(\vec{w}\) is \(\theta\).
+	Prove (using the previous exercises):\footnote{Hint: use (5) to rotate \(\vec{w}\) with the same angle that rotates \(\vec{v}\) onto the \(x\)-axis.}
+	\[\vec{v} \cdot \vec{w} = \cos(\theta) \times \norm{\vec{v}} \times \norm{\vec{w}}.\]
 \end{enumerate}
 
 \clearpage
 \section{Parallelograms}
-% \det(v . w) is invariant.
-Recall that a basis gives a tiling.
-We will relate the area to the basis.
-First assume \(\V{v}\) is on the \(x\)-axis.
+\begin{wrapfigure}[5]{r}[1em]{.3\textwidth}
+		\vspace*{-3em}
+		\fbox{\includegraphics[width=.3\textwidth]{tikz/parallelogram.pdf}}
+		\caption{One tile}
+\end{wrapfigure}
 
-\begin{figure}[h!]
-	\centering\fbox{\includegraphics[width=.5\textwidth]{tikz/parallelogram.pdf}}
-\end{figure}
+Recall that a basis for a lattice gives a tiling of space.
 
-\begin{enumerate}[label=(\arabic*)]
-\item Show that the parallelogram \(O, \V{v}, \V{v}+\V{w}, \V{w}\), and the rectangle \(O, A, \V{w}, C\) have equal area.\footnote{Hint: go from one to the other by adding a triangle and removing a triangle (of same area).}
-\item What is the area?
+For~\ref{item1},~\ref{item2} and~\ref{item3}, assume \(\vec{v}\) is on the \(x\)-axis.
+First, we relate the area of the parallelogram to the basis.
+\begin{enumerate}
+	\item\label{item1} Show: the parallelogram \(O, \vec{v}, \vec{v}+\vec{w}, \vec{w}\), and the rectangle \(O, A, \vec{w}, C\) have equal
+		area.\footnote{Hint: go from one to the other by adding a triangle and removing a triangle (of same area).}
+	\item\label{item2} Show: the area is independent of \(c\),~i.e.~replacing \(\vec{w}\) by \(\vec{w} + z \vec{v}\) does not change the area for any \(z\)!
+	\item\label{item3} What is the area in terms of \(x\) and \(d\)?
 \end{enumerate}
 
+\noindent
+Now consider the general case of \(\vec{v} = \twovec{a}{b}\) and \(\vec{w} = \twovec{c}{d}\).
+\begin{figure}[h!]
+	\centering\fbox{\includegraphics[width=.6\textwidth]{tikz/tiling.pdf}}
+	\caption{Tiling of 2D-space by the lattice basis \([\vec{v}, \vec{w}]\)}\label{fig:tiling}
+\end{figure}
+
+\begin{enumerate}[resume*]
+	\item Using~\ref{item2}, slide \(\vec{v}\) to a point on the \(x\)-axis.
+		Show: the parallelogram has area \(ad - bc\).\footnote{Hint: first determine for which value of \(z\), the point \(\vec{v} - z \vec{w}\) is on the \(x\)-axis. Then determine the \(x\)-coordinate of this point.}
+
+	\item How does the area change when you:
+		\begin{enumerate}
+		\item swap \(\vec{v}\) and \(\vec{w}\)?
+		\item replace \(\vec{w}\) by \(\vec{w} + \vec{v}\)?
+		\item multiply \(\vec{v}\) and \(\vec{w}\) by \(2\)?
+		\end{enumerate}
+	\item Conclude from (1) and (2) that the area stays the same during lattice reduction.
+
+	\item
+		Show: the circle in Figure~\ref{fig:tiling-np} has radius \(r = \frac12 \norm{\vec{v}}\). \\
+		Show: the circle in Figure~\ref{fig:tiling} has radius \(r' = \frac12 \norm{\vec{v}} \times \sin(\theta) \leq r\), where \(\theta\) is the angle between \(\vec{v}\) and \(\vec{w}\). \\
+\end{enumerate}
+\begin{figure}[h!]
+	\centering\fbox{\includegraphics[width=.6\textwidth]{tikz/tiling-NP.pdf}}
+	\caption{A different tiling of 2D-space, using a rectangular tile.}\label{fig:tiling-np}
+\end{figure}
+\noindent
+\textbf{Encryption with lattices.}
+With the secret key (the good basis \([\vec{v},\vec{w}]\)) only you can decrypt ciphertexts sent by others!
+Namely, a ciphertext is \(\vec{t} = \vec{m} + \vec{e}\),
+	where \(\vec{m} = a \vec{v} + b \vec{w}\) (\(a, b\) integer) corresponds to a message,
+	and \(\vec{e}\) is a short vector.
+With the secret key, you can find the tile containing \(\vec{t}\) and recover \(\vec{m}\), \emph{if} \(\norm{\vec{e}}\) is small enough.
+
+\begin{enumerate}[resume*]
+	\item Show: decrypting with the tile in Fig.~\ref{fig:tiling}
+	works if \(\norm{\vec{e}} \leq r'\),
+	and with the tile in Fig.~\ref{fig:tiling-np}, it works if \(\norm{\vec{e}} \leq r\).
+	Which of the two tilings works best at decryption?
+\end{enumerate}
+
+\clearpage
 \section{Gram--Schmidt and projections}
+
+Instead of 2D-space (\(\RR^2\)), in this exercise we will look at \(n\)-dimensional space (\(\RR^n\)).
+Now, vectors are described by \(n\) coordinates:
+\[
+	\vec{v} = \begin{pmatrix} v_1 \\ v_2 \\ \cdots \\ v_n \end{pmatrix}.
+\]
+We still have the inner product, which is:
+\(\vec{v} \cdot \vec{w} = v_1 \times w_1 + v_2 \times w_2 + \ldots v_n \times w_n\).
 
 \section{Lagrange reduction}
 
