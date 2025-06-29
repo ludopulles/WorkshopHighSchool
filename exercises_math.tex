@@ -1,6 +1,6 @@
 % chktex-file 8
 \documentclass[10pt,a4paper]{article}
-\usepackage{amsmath,amssymb,enumitem,fancyhdr,mathtools,graphicx,wrapfig}
+\usepackage{amsmath,amssymb,enumitem,fancyhdr,mathtools,graphicx,wrapfig,xcolor}
 \usepackage[margin=2cm]{geometry}
 \newcommand{\twovec}[2]{\ensuremath{\begin{pmatrix}{#1}\\{#2}\end{pmatrix}}}
 
@@ -66,8 +66,9 @@ In the exercises below, we will see why this definition is nice and meaningful.
 
 \clearpage
 \section{Parallelograms}
+
 \begin{wrapfigure}[5]{r}[1em]{.3\textwidth}
-		\vspace*{-3em}
+		\vspace*{-4em}
 		\fbox{\includegraphics[width=.3\textwidth]{tikz/parallelogram.pdf}}
 		\caption{One tile}
 \end{wrapfigure}
@@ -85,12 +86,13 @@ First, we relate the area of the parallelogram to the basis.
 	\item\label{item3} What is the area in terms of \(x\) and \(d\)?
 \end{enumerate}
 
-\noindent
-Now consider the general case of \(\vec{v} = \twovec{a}{b}\) and \(\vec{w} = \twovec{c}{d}\).
 \begin{figure}[h!]
 	\centering\includegraphics[width=.6\textwidth]{tikz/tiling.pdf}
 	\caption{Tiling of 2D-space by the lattice basis \([\vec{v}, \vec{w}]\)}\label{fig:tiling}
 \end{figure}
+
+\noindent
+Now consider the general case of \(\vec{v} = \twovec{a}{b}\) and \(\vec{w} = \twovec{c}{d}\).
 
 \begin{enumerate}[resume*]
 	\item Using~\ref{item2}, slide \(\vec{v}\) to a point on the \(x\)-axis.
@@ -133,16 +135,16 @@ With the secret key, you can find the tile containing \(\vec{t}\) and recover \(
 Instead of 2D-space (\(\RR^2\)), in this exercise we will look at \(n\)-dimensional space (\(\RR^n\)).
 Now, vectors are described by \(n\) coordinates:
 \[
-	\vec{v} = \begin{pmatrix} v_1 \\ v_2 \\ \cdots \\ v_n \end{pmatrix}.
+	\vec{v} = \begin{pmatrix} v_1 \\ v_2 \\ \cdots \\ v_n \end{pmatrix}
 \]
 We still have the inner product, which is:
 \(\vec{v} \cdot \vec{w} = v_1 \times w_1 + v_2 \times w_2 + \ldots v_n \times w_n\).
 
 \begin{enumerate}
-\item
-	Prove the following, where \(\vec{v},\vec{a},\vec{b}\) are vectors and \(z\) is any number:
+\item\label{item-linearity}
+	Prove the following, where \(\vec{u},\vec{v},\vec{w}\) are vectors and \(z\) is any number:
 	\[
-		\vec{v} \cdot (\vec{a} + \vec{b}) = (\vec{v} \cdot \vec{a}) + (\vec{v} \cdot \vec{b}),
+		\vec{u} \cdot (\vec{v} + \vec{w}) = (\vec{u} \cdot \vec{v}) + (\vec{u} \cdot \vec{w}),
 		\qquad
 		\vec{v} \cdot (z \times \vec{w}) = z \times (\vec{v} \cdot \vec{w}).
 	\]
@@ -154,13 +156,98 @@ We still have the inner product, which is:
 	\[
 		\pi_{\vec{v}}(\vec{w}) = \vec{w} - \frac{\vec{v} \cdot \vec{w}}{\vec{v} \cdot \vec{v}} \times \vec{v}.
 	\]
-	Show: \(\pi_{\vec{v}}(\vec{w})\) satisfies \(\vec{v} \cdot \pi_{\vec{v}}(\vec{w}) = 0\).
+	Show: \(\pi_{\vec{v}}(\vec{w})\) satisfies \(\vec{v} \cdot \pi_{\vec{v}}(\vec{w}) = 0\) (use~\ref{item-linearity}).
 
 	\item
-		By rounding the fraction to the nearest integer, show you can reduce a lattice basis.
-		This is called size-reduction!
+		Consider the following process, called ``Gram--Schmidt orthogonalization'':
+		\[
+			\vec{b}_1^* = \vec{b}_1, \qquad
+			\vec{b}_2^* = \pi_{\vec{b}_1^*}(\vec{b}_2), \qquad
+			\vec{b}_3^* = \pi_{\vec{b}_2^*}(\pi_{\vec{b}_1^*}(\vec{b}_3)), \qquad
+			\ldots.
+		\]
+
+		Show: \(\vec{b}_3^*\) is orthogonal to both \(\vec{b}_1^*\) and \(\vec{b}_2^*\).
+		\emph{(in general show: \(\vec{b}_i^* \cdot \vec{b}_j^* = 0\) for all \(1 \leq i < j \leq n\))}
+
+	\item
+		For finding short basis vectors, we want to reduce \(\vec{b}_3\) by removing (integer) multiples of \(\vec{b}_1\) and \(\vec{b}_2\) that make \(\vec{b}_3\) as short as possible.
+		Considering the tiling in Figure~\ref{fig:tiling-np}, we want that \(\vec{b}_3\) (when ignoring the third dimension) is in the tile containing the origin \(O\), by removing some multiples of \(\vec{b}_1 = \vec{v}\) and \(\vec{b}_2 = \vec{w}\).
+		This tile containing \(O\) is given by the points \(\vec{x}\) for which \(-\frac12 \leq \frac{\vec{b}_1^* \cdot \vec{x}}{\vec{b}_1^* \cdot \vec{b}_1^*} \leq \frac12\) and similarly for \(\vec{b}_2^*\).
+
+		Write \(\lceil x \rfloor\) for rounding a number to its nearest integer.
+		This means \(-\frac12 \leq x - \lceil x \rfloor \leq \frac12\).
+		Given \(\vec{b}_3\), show:
+		\[
+			\vec{x} = \vec{b}_3 - \Big\lceil \frac{\vec{b}_2^* \cdot \vec{b}_3}{\vec{b}_2^* \cdot \vec{b}_2^*} \Big\rfloor \vec{b}_2,
+		\]
+		satisfies \(-\frac12 \leq \frac{\vec{b}_2^* \cdot \vec{x}}{\vec{b}_2^* \cdot \vec{b}_2^*} \leq \frac12\).
+
+		Given \(\vec{x}\) as above, show:
+		\[
+			\vec{y} = \vec{x} - \Big\lceil \frac{\vec{b}_1^* \cdot \vec{x}}{\vec{b}_1^* \cdot \vec{b}_1^*} \Big\rfloor \vec{b}_1,
+		\]
+		is in the tile containing \(O\), that is it satisfies:
+		\(\displaystyle
+			-\frac12 \leq \frac{\vec{b}_1^* \cdot \vec{y}}{\vec{b}_1^* \cdot \vec{b}_1^*} \leq \frac12
+		\), and
+		\(\displaystyle
+			-\frac12 \leq \frac{\vec{b}_2^* \cdot \vec{y}}{\vec{b}_2^* \cdot \vec{b}_2^*} \leq \frac12
+		\).
+		The process is called ``size-reduction'' and forms the basis of lattice reduction!
 \end{enumerate}
 
-\section{Lagrange reduction}
+\clearpage
+\section{Lagrange reduction (dimension 2)}
+Lattice reduction in dimension 2 is easy.
+Namely, we can perform the following algorithm:
+\begin{enumerate}[itemsep=0mm,leftmargin=4em,label=\arabic*.]
+	\item Perform size-reduction (Ex 3(d)) on \(\vec{b}_2\):
+	\begin{equation}\label{eq:sr-d2}
+		\vec{b}_2' = \vec{b}_2 - \Big\lceil \frac{\vec{b}_1 \cdot \vec{b}_2}{\vec{b}_1 \cdot \vec{b}_1} \Big\rfloor \vec{b}_1,
+	\end{equation}
+	(and replace \(\vec{b}_2\) by \(\vec{b}_2'\)).
+	% and this will size-reduce \(\vec{b}_2\).
+	\item If \(\norm{\vec{b}_2} \geq \norm{\vec{b}_1}\), the basis \([\vec{b}_1, \vec{b}_2]\) is reduced, so stop.
+	\item Otherwise, swap \(\vec{b}_1\) and \(\vec{b}_2\), then go back to step 1. %and do Eq.~\eqref{eq:sr-d2} with the new \(\vec{b}_1, \vec{b}_2\).
+	% Otherwise, we terminate the algorithm.
+\end{enumerate}
 
+In Figure~\ref{fig:wristwatch}, \(\vec{b}_2\) becomes shorter than \(\vec{b}_1\) after size-reduction.
+Then, by size-reducing \(\vec{b}_1\) with respect to \(\vec{b}_2\) one may possibly shorten \(\vec{b}_1\) further.
+
+\begin{figure}[h!]
+	\centering\includegraphics[width=.5\textwidth]{tikz/wristwatch.pdf}
+	\caption{Example of one iteration of Lagrange reduction.}\label{fig:wristwatch}
+\end{figure}
+
+\begin{enumerate}
+	\item
+		Show that in each iteration (size reduction \& swap) the length of \(\vec{b}_1\) stays the same, or decreases.
+	
+	\item Conclude that the number of iterations is finite.\footnote{Hint: show if \(\norm{\vec{b}_1}\) stays the same in one iteration that the algorithm stops and the shortest vectors are found.}
+
+	\item When the process terminates, show that \(\vec{b}_2\) must be in the striped region.
+
+	\item Show: the area of the parallelogram spanned by \(\vec{b}_1, \vec{b}_2\) is the same as the area of the rectangle spanned by \(\vec{b}_1\) and \(\vec{b}_2^*\). Show: this area is
+	\[
+		\norm{\vec{b}_1} \times \norm{\vec{b}_2^*}.
+	\]
+
+	\item
+		Given a lattice in dimension \(2\), show that we can draw circles around each lattice point, with radius \(\frac12 \norm{\vec{b}_1}\) if \(\vec{b}_1\) is one of the shortest vectors.
+		Any lattice gives a so-called ``sphere packing''.
+	
+	\item What is the densest (largest radius) sphere packing for a lattice in dimension 2,
+		when you require that \(\norm{\vec{b}_1} \times \norm{\vec{b}_2^*} = 1\)?
+
+		Hint: (1) look at the ratio \(\displaystyle \frac{{\left(\frac12 \norm{\vec{b}_1}\right)}^2}{\norm{\vec{b}_1} \times \norm{\vec{b}_2^*}} = \frac{\norm{\vec{b}_1}}{4 \times \norm{\vec{b}_2^*}}\), and assume \(\vec{b}_1\) lies on the \(x\)-axis. \\
+		{\color{white}Hint: }(2) What is the possible value of \(\vec{b}_2\) lying in the striped region that maximizes this ratio? \\
+		{\color{white}Hint: }(3) What lattice is this?
+		
+		% Each time we may get a shorter vector \(\vec{b}_1\), until it is the shortest vector of the lattice.
+
+		% By rounding the fraction to the nearest integer, show you can reduce a lattice basis.
+		% This is called size-reduction!
+\end{enumerate}
 \end{document}
