@@ -194,7 +194,15 @@ We still have the inner product, which is:
 		\(\displaystyle
 			-\frac12 \leq \frac{\vec{b}_2^* \cdot \vec{y}}{\vec{b}_2^* \cdot \vec{b}_2^*} \leq \frac12
 		\).
+
 		The process is called ``size-reduction'' and forms the basis of lattice reduction!
+
+		\emph{%
+		In general, to size-reduce \(\vec{b}_n\), we update the value of \(\vec{b}_n\) \(n-1\) times by computing the following first for \(i = n-1\), then \(i = n-2, \ldots\) down to \(i=1\):
+		\[
+			\vec{b}_n := \vec{b}_n - \Big\lceil \frac{\vec{b}_i^* \cdot \vec{b}_n}{\vec{b}_i^* \cdot \vec{b}_i^*} \Big\rfloor \vec{b}_i,
+		\]
+		where \(x := y\) means ``put the value of \(y\) in the slot of \(x\).}
 \end{enumerate}
 
 \clearpage
